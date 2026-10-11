@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=InstaLinux
+Comment=Универсальный установщик программ (.deb, .AppImage, архивы, скрипты)
+Exec=instalinux %U
+Icon=instalinux
+Terminal=false
+Categories=System;Utility;PackageManager;
+Keywords=installer;deb;appimage;package;tar;zip;установщик;
+StartupNotify=true

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3584e4" />
+      <stop offset="100%" stop-color="#1c71d8" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Base Rounded Container -->
+  <rect x="12" y="12" width="104" height="104" rx="26" fill="url(#bgGrad)" filter="url(#shadow)" />
+
+  <!-- Package / Box flaps -->
+  <path d="M 34 46 L 64 30 L 94 46 L 64 62 Z" fill="#ffffff" fill-opacity="0.9" />
+  <path d="M 34 49 L 62 64 L 62 98 L 34 83 Z" fill="#ffffff" fill-opacity="0.75" />
+  <path d="M 66 64 L 94 49 L 94 83 L 66 98 Z" fill="#ffffff" fill-opacity="0.6" />
+
+  <!-- Dynamic Download / Arrow Accent -->
+  <circle cx="90" cy="90" r="18" fill="#33d17a" />
+  <path d="M 90 80 L 90 95 M 85 91 L 90 96 L 95 91" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+</svg>
