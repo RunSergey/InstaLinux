@@ -11,7 +11,8 @@ from src.models import (
     create_desktop_shortcut,
     save_installed_app,
     get_installed_apps,
-    remove_installed_app
+    remove_installed_app,
+    scan_all_system_applications,
 )
 from src.inspector import PackageInspector
 from src.installer import InstallerEngine
@@ -30,7 +31,6 @@ class TestInstaLinuxCore(unittest.TestCase):
         self.assertEqual(sanitize_id("   "), "app")
 
     def test_inspector_archive(self):
-        # Create a sample tar.gz with an executable script and an icon
         archive_path = self.test_dir / "sample-app-1.0.tar.gz"
         sub_dir = self.test_dir / "sample-app"
         sub_dir.mkdir()
@@ -53,7 +53,6 @@ class TestInstaLinuxCore(unittest.TestCase):
         self.assertTrue(any("sample-app.sh" in x for x in info["executables"]))
 
     def test_install_and_uninstall_archive(self):
-        # Create a test tar.gz
         archive_path = self.test_dir / "mytool.tar.gz"
         tool_src = self.test_dir / "mytool"
         tool_src.mkdir()
@@ -89,6 +88,17 @@ class TestInstaLinuxCore(unittest.TestCase):
         self.assertTrue(success)
         self.assertFalse(install_dir.exists())
         self.assertFalse(Path(result["desktop_file"]).exists())
+
+    def test_system_applications_scanner(self):
+        apps = scan_all_system_applications()
+        self.assertIsInstance(apps, list)
+        self.assertGreater(len(apps), 0)
+        # Verify structure of scanned entries
+        first = apps[0]
+        self.assertIn("name", first)
+        self.assertIn("path", first)
+        self.assertIn("pkg_type", first)
+        self.assertIn("is_duplicate", first)
 
 if __name__ == "__main__":
     unittest.main()
