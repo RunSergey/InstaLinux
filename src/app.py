@@ -723,10 +723,16 @@ class InstaLinuxWindow(Adw.ApplicationWindow):
 
         def on_response(dlg, response):
             if response == "delete":
-                ok, msg = InstallerEngine.uninstall(app_data)
-                self.show_toast(msg)
-                self._load_installed_apps()
-                self._load_system_apps()
+                self.show_toast(f"Удаление '{app_name}'...")
+                import threading
+                def worker():
+                    ok, msg = InstallerEngine.uninstall(app_data)
+                    def update_ui():
+                        self.show_toast(msg)
+                        self._load_installed_apps()
+                        self._load_system_apps()
+                    GLib.idle_add(update_ui)
+                threading.Thread(target=worker, daemon=True).start()
 
         dialog.connect("response", on_response)
         dialog.present()
@@ -747,9 +753,16 @@ class InstaLinuxWindow(Adw.ApplicationWindow):
 
         def on_response(dlg, response):
             if response == "delete":
-                ok, msg = InstallerEngine.uninstall_system_app(app_item)
-                self.show_toast(msg)
-                self._load_system_apps()
+                self.show_toast(f"Удаление '{app_name}'...")
+                import threading
+                def worker():
+                    ok, msg = InstallerEngine.uninstall_system_app(app_item)
+                    def update_ui():
+                        self.show_toast(msg)
+                        self._load_system_apps()
+                        self._load_installed_apps()
+                    GLib.idle_add(update_ui)
+                threading.Thread(target=worker, daemon=True).start()
 
         dialog.connect("response", on_response)
         dialog.present()
